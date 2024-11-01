@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (response.statusCode == 200) {
       // レスポンスが成功した場合
-      debugPrint("http succes");
+      //debugPrint("http succes");
       debugPrint(response.body);
       String item = json.decode(response.body)[0]["name"];
       debugPrint(item);
