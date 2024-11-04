@@ -15,8 +15,8 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       # ************************************
 
-    # volumes:
-    #   - ./db:/docker-entrypoint-initdb.d # ファイルをマウントしてDBを立ち上げた後でSQLを自動実行
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d # ファイルをマウントしてDBを立ち上げた後でSQLを自動実行
     networks:
       - my_network # ネットワークを指定して、コンテナ間で通信する
 
@@ -58,6 +58,8 @@ services:
       - "9000:9000"
     networks:
       - my_network
+    volumes:
+      - ./client:/app
 
 networks:
   my_network:

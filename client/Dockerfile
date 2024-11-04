@@ -20,15 +20,19 @@ RUN flutter channel stable && \
     flutter upgrade && \
     flutter config --enable-web
 
+RUN ls
 # アプリケーションのソースコードをコンテナにコピー
-WORKDIR /app
-COPY . /app
+COPY . client
+
+WORKDIR /client
+
 
 # Webビルドの実行
-RUN flutter build web
+#RUN flutter build web
 
 # ポート公開とビルドされたアプリの提供
 EXPOSE 9000
 
 # Webサーバーでアプリケーションを提供
-CMD ["flutter", "run", "-d", "web-server", "--web-port", "9000", "--release", "--web-hostname", "0.0.0.0"]
+# CMD ["flutter", "run", "-d", "web-server", "--web-port", "9000", "--release", "--web-hostname", "0.0.0.0"]
+CMD ["flutter", "run", "-d", "web-server", "--web-port", "9000", "--web-hostname", "0.0.0.0"]

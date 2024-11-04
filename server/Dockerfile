@@ -17,10 +17,10 @@ RUN apk update \
 && python3 -m pip install -r requirements.txt --no-cache-dir
 
 # アプリケーションのソースコードをコンテナにコピー
-COPY ./app server/app
+COPY ./app app
 
 # FastAPIアプリケーションをuvicornで実行
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 
 #memo: 20241101 これまで起動できたserverがうまく立ち上がらない

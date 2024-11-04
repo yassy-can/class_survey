@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("getApi")),
             Container(
               child: Text(items),
-              color: Colors.orange,
+              color: Colors.blue,
               height: 100,
             )
           ],
@@ -94,9 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
     if (response.statusCode == 200) {
       // レスポンスが成功した場合
       //debugPrint("http succes");
+      // UTF-8としてデコード
+      final decodedResponse = utf8.decode(response.bodyBytes);
       debugPrint(response.body);
-      String item = json.decode(response.body)[0]["name"];
-      debugPrint(item);
+      // JSONをデコード
+      final item = json.decode(decodedResponse);
+      debugPrint(item.toString());
       setState(() {
         items = item;
       });
