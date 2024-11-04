@@ -2,9 +2,12 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+#model
+from app.db import session
+from app.fruit import *
 
 app = FastAPI()
-# app.mount("/", StaticFiles(directory="build/web", html=True), name="static")
+# app.mount("/static", StaticFiles(directory="../client/build/web", html=True), name="static")
 # app.mount("/client", StaticFiles(directory="client"))
 
 app.add_middleware(
@@ -19,13 +22,23 @@ class Item(BaseModel):
     id: int
     name: str
 
+# @app.get("/favicon.ico", include_in_schema=False)
+# async def favicon():
+#     return RedirectResponse(url="/static/favicon.ico")
+
 @app.get("/")
 async def read_root():
     return [{"message": "hello world"}]
 
 @app.get("/items/")
 async def read_items():
-    return [{"id": 1, "name": "Item test"}, {"id": 2, "name": "Item 2"}]
+    # try:
+    #     # データを取得
+    #     fruits = session.query(Fruit).all()
+    #     return [fruit.json_object() for fruit in fruits]
+    # finally:
+    #     print("データを取得した")
+    return {}
 
 @app.post("/items/")
 async def create_item(item: Item):
