@@ -35,11 +35,11 @@ async def read_items():
     try:
         # データを取得
         fruits = session.query(Fruit).all()
-        # return [fruit.json_object() for fruit in fruits]
-        # fruitsがリストとして返ってくる部分を修正
-        first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
-        print("first_fruit",first_fruit)
-        return first_fruit.json_object() if first_fruit else {"error": "No fruits found"}
+        return [fruit.json_object() for fruit in fruits]
+        # # fruitsがリストとして返ってくる部分を修正
+        # first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
+        # print("first_fruit",first_fruit)
+        # return first_fruit.json_object() if first_fruit else {"error": "No fruits found"}
         
     finally:
         print("データを取得した")
