@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 #model
 from app.db import session
 from app.fruit import *
@@ -35,7 +36,7 @@ async def read_items():
     try:
         # データを取得
         fruits = session.query(Fruit).all()
-        return [fruit.json_object() for fruit in fruits]
+        return JSONResponse(content=[fruit.json_object() for fruit in fruits])
         # # fruitsがリストとして返ってくる部分を修正
         # first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
         # print("first_fruit",first_fruit)
