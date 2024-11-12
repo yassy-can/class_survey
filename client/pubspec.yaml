@@ -16,6 +16,7 @@ dependencies:
   flutter_hooks:
   freezed_annotation:
   riverpod_annotation:
+  file_picker:
 
   cupertino_icons: ^1.0.6
 

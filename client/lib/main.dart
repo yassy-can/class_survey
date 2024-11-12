@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:front_end/presentation/filepick.dart';
 import 'package:front_end/presentation/page.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Mylist(),
+      home: const Filepick(),
     );
   }
 }
