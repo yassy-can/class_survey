@@ -1,12 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front_end/presentation/chartpage.dart';
 import 'package:front_end/presentation/filepick.dart';
 import 'package:front_end/presentation/page.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const MyApp());
+  const app = MyApp();
+  const scope = ProviderScope(child: app);
+  runApp(scope);
 }
 
 class MyApp extends StatelessWidget {
@@ -21,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Filepick(),
+      home: const Chartpage(),
     );
   }
 }

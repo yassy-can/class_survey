@@ -1,38 +1,29 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:file/file.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:front_end/application/chartlist_provider.dart';
 
-class Filepick extends HookWidget {
+class Filepick extends ConsumerWidget {
   const Filepick({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final filename = useState("");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ChartListnotifier = ref.read(chartListnotifierProvider.notifier);
 
-    Future<void> _pickFile() async {
+    Future<void> pickFile() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles();
       if (result != null) {
-        filename.value = result.files.first.name;
-        debugPrint(filename.value);
+        debugPrint(result.files.first.name);
+        ChartListnotifier.updateState([Text('data'), Text("data")]);
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () async {
-                  _pickFile();
-                },
-                child: Text("button")),
-          ],
-        ),
-      ),
+    return Center(
+      child: ElevatedButton(
+          onPressed: () async {
+            pickFile();
+          },
+          child: Text("chose file")),
     );
   }
 }
