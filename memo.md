@@ -14,3 +14,4 @@ db
 
 20241105 　 client の apiGet メソッドの実装まで。未確認。
 pickfile でファイルの読み込み
+20241113 client の graphic の実装と ui 構築
