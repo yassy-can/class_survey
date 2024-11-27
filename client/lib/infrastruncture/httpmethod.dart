@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:typed_data';
+import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 Future<List<Map<String, dynamic>>> callGetApi() async {
   const String apiUrl = "http://localhost:8000/items/";
@@ -41,4 +43,68 @@ Future<List<Map<String, dynamic>>> callGetApi() async {
   }
 
   return [];
+}
+
+Future<void> uploadFile(Uint8List selectedFile) async {
+  try {
+    // アップロード先のURL
+    const url = 'http://localhost:8000/upload/';
+
+    // HTTPリクエストの設定
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+
+    request.files.add(
+      http.MultipartFile.fromBytes(
+        'file', // サーバー側で受け取るときのフィールド名
+        selectedFile,
+      ),
+    );
+
+    // リクエストの送信
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      debugPrint('ファイルが正常にアップロードされました');
+    } else {
+      debugPrint('ファイルのアップロードに失敗しました: ${response.statusCode}');
+    }
+  } catch (e) {
+    debugPrint('エラーが発生しました: $e');
+  } finally {
+    debugPrint('uploadFile done');
+  }
+}
+
+Future<void> uploadCsvFile(Uint8List fileBytes) async {
+  try {
+    // リクエストのURL
+    final url = Uri.parse('http://localhost:8000/upload_csv/');
+
+    // マルチパートリクエストの作成
+    var request = http.MultipartRequest('POST', url);
+
+    // CSVファイルの追加
+    request.files.add(
+      http.MultipartFile.fromBytes(
+        'file', // サーバー側で使用するフィールド名
+        fileBytes,
+        filename: 'upload.csv',
+        contentType: MediaType('text', 'csv'), // CSVファイルの Content-Type
+      ),
+    );
+
+    // リクエストの送信
+    var response = await request.send();
+
+    // ステータスコードの確認
+    if (response.statusCode == 200) {
+      final responseBody = await response.stream.bytesToString();
+      debugPrint('ファイルが正常にアップロードされました');
+      debugPrint("response.body:\n$responseBody");
+    } else {
+      debugPrint("CSVファイルのアップロードに失敗しました: ${response.statusCode}");
+    }
+  } catch (e) {
+    debugPrint("エラーが発生しました: $e");
+  }
 }

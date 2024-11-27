@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_end/application/chartlist_provider.dart';
+import 'package:front_end/infrastruncture/httpmethod.dart';
 
 class Filepick extends ConsumerWidget {
   const Filepick({super.key});
@@ -15,6 +18,10 @@ class Filepick extends ConsumerWidget {
       if (result != null) {
         debugPrint(result.files.first.name);
         ChartListnotifier.updateState([Text('data'), Text("data")]);
+        final Uint8List? selectedFile = result.files.first.bytes;
+        if (selectedFile != null) {
+          await uploadCsvFile(selectedFile);
+        }
       }
     }
 
