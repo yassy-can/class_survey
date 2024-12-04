@@ -1,10 +1,14 @@
 from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import pandas as pd
 import io
+import asyncio
 #model
+from app.db import session
+from app.fruit import *
 from app.LMestimation.lmestimation import LMestimation
 
 app = FastAPI()
@@ -31,6 +35,20 @@ class Item(BaseModel):
 async def read_root():
     return [{"message": "hello world"}]
 
+@app.get("/items/")
+async def read_items():
+    try:
+        # データを取得
+        fruits = session.query(Fruit).all()
+        return JSONResponse(content=[fruit.json_object() for fruit in fruits])
+        # # fruitsがリストとして返ってくる部分を修正
+        # first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
+        # print("first_fruit",first_fruit)
+        # return first_fruit.json_object() if first_fruit else {"error": "No fruits found"}
+        
+    finally:
+        print("データを取得した")
+    # return {}
 
 @app.post("/items/")
 async def create_item(item: Item):
@@ -71,4 +89,4 @@ async def upload_csv(file: UploadFile):
     # await asyncio.sleep(5)
     
     # JSONレスポンスにCSVの内容を一部返す（先頭5行）
-    return JSONResponse(content={"message": "ファイルを受け取りました", "data": result})# , "loadings": loadings})
+    return JSONResponse(content={"message": "ファイルを受け取りました", "data": result, "loadings": loadings})

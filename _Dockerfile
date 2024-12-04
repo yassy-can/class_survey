@@ -1,0 +1,52 @@
+# ベースイメージとしてPython 3.9を使用
+FROM python:3-alpine
+
+# 作業ディレクトリを作成
+WORKDIR /server
+
+# 依存関係のリストをコンテナにコピー
+COPY requirements.txt .
+
+# 依存関係をインストール
+#RUN pip install --no-cache-dir -r requirements.txt
+
+# RUN apk update && \
+#     apk add --no-cache \
+#     build-base \
+#     python3-dev \
+#     gfortran \
+#     openblas-dev \
+#     postgresql-libs \
+#     --virtual .build-deps \
+#     gcc \
+#     musl-dev \
+#     postgresql-dev \
+# && python3 -m pip install --upgrade pip \
+# && python3 -m pip install -r requirements.txt --no-cache-dir \ 
+# && apk del .build-deps
+
+RUN apk --update-cache \
+    add musl \
+	linux-headers \
+	gcc \
+	g++ \
+	make \
+	gfortran \
+	openblas-dev \
+	python3 \
+	python3-dev 
+
+RUN pip3 install --upgrade pip 
+RUN pip3 install numpy \
+    scipy  \
+    scikit-learn \ 
+    'pandas<0.21.0'
+
+# アプリケーションのソースコードをコンテナにコピー
+COPY ./app app
+
+# FastAPIアプリケーションをuvicornで実行
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+
+#memo: 20241101 これまで起動できたserverがうまく立ち上がらない
