@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:front_end/infrastruncture/dummy.dart';
 import 'package:http/http.dart' as http;
-import 'dart:typed_data';
-import 'dart:io';
 import 'package:http_parser/http_parser.dart';
 
 Future<List<Map<String, dynamic>>> callGetApi() async {
@@ -75,36 +74,46 @@ Future<void> uploadFile(Uint8List selectedFile) async {
   }
 }
 
-Future<void> uploadCsvFile(Uint8List fileBytes) async {
-  try {
-    // リクエストのURL
-    final url = Uri.parse('http://localhost:8000/upload_csv/');
+Future<Map<dynamic, dynamic>?> uploadCsvFile(Uint8List fileBytes) async {
+  const bool isDockerMode =
+      false; //String.fromEnvironment('DOCKER_MODE') == 'true';
 
-    // マルチパートリクエストの作成
-    var request = http.MultipartRequest('POST', url);
+  if (isDockerMode) {
+    // try {
+    //   // リクエストのURL
+    //   final url = Uri.parse('http://localhost:8000/upload_csv/');
 
-    // CSVファイルの追加
-    request.files.add(
-      http.MultipartFile.fromBytes(
-        'file', // サーバー側で使用するフィールド名
-        fileBytes,
-        filename: 'upload.csv',
-        contentType: MediaType('text', 'csv'), // CSVファイルの Content-Type
-      ),
-    );
+    //   // マルチパートリクエストの作成
+    //   var request = http.MultipartRequest('POST', url);
 
-    // リクエストの送信
-    var response = await request.send();
+    //   // CSVファイルの追加
+    //   request.files.add(
+    //     http.MultipartFile.fromBytes(
+    //       'file', // サーバー側で使用するフィールド名
+    //       fileBytes,
+    //       filename: 'upload.csv',
+    //       contentType: MediaType('text', 'csv'), // CSVファイルの Content-Type
+    //     ),
+    //   );
 
-    // ステータスコードの確認
-    if (response.statusCode == 200) {
-      final responseBody = await response.stream.bytesToString();
-      debugPrint('ファイルが正常にアップロードされました');
-      debugPrint("response.body:\n$responseBody");
-    } else {
-      debugPrint("CSVファイルのアップロードに失敗しました: ${response.statusCode}");
-    }
-  } catch (e) {
-    debugPrint("エラーが発生しました: $e");
+    //   // リクエストの送信
+    //   var response = await request.send();
+
+    //   // ステータスコードの確認
+    //   if (response.statusCode == 200) {
+    //     final responseBody = await response.stream.bytesToString();
+    //     debugPrint('ファイルが正常にアップロードされました');
+    //     debugPrint("response.body:\n$responseBody");
+    //     return responseBody;
+    //   } else {
+    //     debugPrint("CSVファイルのアップロードに失敗しました: ${response.statusCode}");
+    //     return null;
+    //   }
+    // } catch (e) {
+    //   debugPrint("エラーが発生しました: $e");
+    // }
+  } else {
+    await Future.delayed(const Duration(seconds: 1));
+    return dummydata['data'];
   }
 }

@@ -15,9 +15,9 @@ def shaping_row(df):
     if studentID_col is not None:
         df_studentID = df.iloc[:, studentID_col]
         shaped_row = df_studentID[~df_studentID.isna()].index.tolist()
-        
+        print(df_studentID)
         # print("NaN でない行:")
-        # print(shaped_row)
+        print('shaped_row: ',shaped_row)
 
         return shaped_row
     else:
@@ -49,7 +49,7 @@ def shaping_col(df, shaped_row, keywords):
                     break
         # print("keyword_col: ", keywords_col)
 
-    return keywords_col
+    return keywords_col, number_col
 
 # dfの成形
 def shaping_df(df, keywords):
@@ -57,17 +57,19 @@ def shaping_df(df, keywords):
     shaped_row = shaping_row(df)
 
     # キーワードの列を抽出
-    shaped_col_dict = shaping_col(df, shaped_row, keywords)
+    shaped_col_dict, number_col = shaping_col(df, shaped_row, keywords)
     shaped_col = [value[0] for value in shaped_col_dict.values()]
 
     # 行、列の情報をもとにdfを作成
     shaped_df = df.iloc[shaped_row, shaped_col].dropna()
 
+    shaped_df.index = shaped_df.index + 1
+
     # ヘッダーの変更
     new_header = ["学籍番号","興味","役立","期待・満足","学習意欲"]
     shaped_df.columns = new_header
 
-    return shaped_df
+    return shaped_df, number_col
 
 
 #テスト用

@@ -6,7 +6,7 @@ part of 'chartlist_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chartListnotifierHash() => r'a4e5ad91dcff988870489901cdf4284427c661e5';
+String _$chartListnotifierHash() => r'965ae3e288e542bd366b02d0d6cb76e9b26c53b6';
 
 /// See also [ChartListnotifier].
 @ProviderFor(ChartListnotifier)
