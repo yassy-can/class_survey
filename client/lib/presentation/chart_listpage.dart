@@ -18,6 +18,11 @@ class ChartListpage extends StatelessWidget {
         return chartlist[index];
       },
     );
-    return Text("test"); // chartlistview;
+
+    final listviewcontainer = Container(
+      width: 500,
+      child: chartlistview,
+    );
+    return listviewcontainer;
   }
 }

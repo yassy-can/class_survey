@@ -1,5 +1,5 @@
 class QuestionTracker {
-  static const List<String> types = ["学習意欲が低い", "どちらでもない", "学習意欲が高い"];
+  static const List<String> types = ["学習意欲が高い", "どちらでもない", "学習意欲が低い"];
 
   final String type;
   final Map<int, int> counts;

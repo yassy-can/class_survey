@@ -22,3 +22,5 @@ pickfile でファイルの読み込み
 20241204 Api でファイルを受け取り、処理をして結果を送信
 
 flutter pub run build_runner build --delete-conflicting-outputs
+
+20250116 　これまで useQuestion を更新した後画面遷移できていたが、できなくなったのでこれから goruter に切り替える やっぱなし

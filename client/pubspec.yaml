@@ -19,6 +19,7 @@ dependencies:
   riverpod_annotation:
   file_picker:
   graphic:
+  go_router:
 
   cupertino_icons: ^1.0.6
   http_parser: ^4.0.2

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:front_end/application/survey_provider.dart';
-import 'package:front_end/domain/sort.dart';
 import 'package:front_end/presentation/chart_listpage.dart';
 import 'package:front_end/presentation/selectquestion.dart';
 import 'package:front_end/presentation/subjectdrawer.dart';
@@ -60,8 +59,8 @@ class ChartHomepage extends HookConsumerWidget {
             backgroundColor: Colors.blue,
             title: const Text("chartpage"),
           ),
-          body: Text('test'), //ChartListpage(survey: survey),
-          floatingActionButton: FloatingActionButton(onPressed: onPressed()),
+          body: ChartListpage(survey: survey),
+          floatingActionButton: FloatingActionButton(onPressed: onPressed),
           drawer: subjectDrawer);
     }
   }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:front_end/domain/questiontracker.dart';
 import 'package:front_end/domain/survey.dart';
 import 'package:front_end/presentation/chart_fivequestion.dart';
@@ -10,7 +8,7 @@ List<Widget> sortAndChart(Survey survey) {
 
   debugPrint('sort called');
   final numberCol = survey.lmeData['number_col'];
-  debugPrint('numberCol: ${numberCol}');
+  debugPrint('numberCol: $numberCol');
   debugPrint('useQuestion: ${survey.useQuestion}');
 
   for (int element in survey.useQuestion) {
@@ -20,7 +18,20 @@ List<Widget> sortAndChart(Survey survey) {
       final fivequestion = sort5question(survey, element);
       final jsonList = sortjson(fivequestion);
       final chart = chartFiveQuestion(jsonList);
-      chartlist.add(chart);
+      final colmun = Column(
+        children: [
+          Text('質問${element}'),
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: chart,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      );
+      chartlist.add(colmun);
     } else {
       // 同じ要素が見つからなかった場合の処理
       print("Element $element is not in the second list.");
