@@ -2,13 +2,13 @@
 
 ## 概要
 
-このプロジェクトは 3 つの質問から学習意欲を推定することで、授業アンケートの結果を学習意欲別に分類することを目的としています。
+このプロジェクトは 3 つの質問から学習意欲を推定することで、授業アンケートの結果を学習意欲別に分類し、授業改善に役立てることを目的としています。
 
 ---
 
-フロントエンド: Flutter, graphic, riverpot
-バックエンド: Python, FastAPI, NumPy, scikit-learn, pandas
-インフラ: Docker
+- フロントエンド: Flutter, graphic, riverpot
+- バックエンド: Python, FastAPI, NumPy, scikit-learn, pandas
+- インフラ: Docker
 
 ---
 
