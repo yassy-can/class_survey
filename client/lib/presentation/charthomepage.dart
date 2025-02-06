@@ -59,7 +59,9 @@ class ChartHomepage extends HookConsumerWidget {
             backgroundColor: Colors.blue,
             title: const Text("chartpage"),
           ),
-          body: ChartListpage(survey: survey),
+          body: Center(
+            child: ChartListpage(survey: survey),
+          ),
           floatingActionButton: FloatingActionButton(onPressed: onPressed),
           drawer: subjectDrawer);
     }

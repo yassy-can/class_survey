@@ -35,40 +35,40 @@ class Item(BaseModel):
 async def read_root():
     return [{"message": "hello world"}]
 
-@app.get("/items/")
-async def read_items():
-    try:
-        # データを取得
-        fruits = session.query(Fruit).all()
-        return JSONResponse(content=[fruit.json_object() for fruit in fruits])
-        # # fruitsがリストとして返ってくる部分を修正
-        # first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
-        # print("first_fruit",first_fruit)
-        # return first_fruit.json_object() if first_fruit else {"error": "No fruits found"}
+# @app.get("/items/")
+# async def read_items():
+#     try:
+#         # データを取得
+#         fruits = session.query(Fruit).all()
+#         return JSONResponse(content=[fruit.json_object() for fruit in fruits])
+#         # # fruitsがリストとして返ってくる部分を修正
+#         # first_fruit = fruits[0] if fruits else None  # フルーツが存在するか確認
+#         # print("first_fruit",first_fruit)
+#         # return first_fruit.json_object() if first_fruit else {"error": "No fruits found"}
         
-    finally:
-        print("データを取得した")
+#     finally:
+#         print("データを取得した")
     # return {}
 
-@app.post("/items/")
-async def create_item(item: Item):
-    return item
+# @app.post("/items/")
+# async def create_item(item: Item):
+#     return item
 
-@app.post("/upload/")
-async def upload_file(file: UploadFile):
+# @app.post("/upload/")
+# async def upload_file(file: UploadFile):
 
-    if not file:
-        return JSONResponse(content={"message": "ファイルがありません"}, status_code=400)
+#     if not file:
+#         return JSONResponse(content={"message": "ファイルがありません"}, status_code=400)
 
-    # ファイル名を取得してprint
-    print(f"受け取ったファイル名: {file.filename}")
+#     # ファイル名を取得してprint
+#     print(f"受け取ったファイル名: {file.filename}")
     
-    # # ファイルの保存（必要な場合）
-    # file_location = f"./uploads/{file.filename}"
-    # with open(file_location, "wb") as buffer:
-    #     buffer.write(await file.read())
+#     # # ファイルの保存（必要な場合）
+#     # file_location = f"./uploads/{file.filename}"
+#     # with open(file_location, "wb") as buffer:
+#     #     buffer.write(await file.read())
     
-    return JSONResponse(content={"filename": file.filename, "message": "ファイルを受け取りました"})
+#     return JSONResponse(content={"filename": file.filename, "message": "ファイルを受け取りました"})
 
 @app.post("/upload_csv")
 async def upload_csv(file: UploadFile):
